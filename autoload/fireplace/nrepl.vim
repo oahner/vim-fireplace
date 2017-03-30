@@ -171,7 +171,10 @@ function! s:nrepl_eval(expr, ...) dict abort
   endif
 
   if has_key(response, 'ex') && !empty(get(msg, 'session', 1))
-    let response.stacktrace = s:extract_last_stacktrace(self, get(msg, 'session', self.session))
+    try
+      let response.stacktrace = s:extract_last_stacktrace(self, get(msg, 'session', self.session))
+    catch
+    endtry
   endif
 
   if has_key(response, 'value')
